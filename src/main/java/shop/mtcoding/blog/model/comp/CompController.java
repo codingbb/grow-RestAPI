@@ -33,15 +33,17 @@ public class CompController {
 //        return "redirect:/comp/" + id + "/comp-home";
 //    }
 
-    @PostMapping("/comp/{id}/update")
-    public String update(@PathVariable Integer id, CompRequest.UpdateDTO requestDTO) {
+    //update
+    @PutMapping("/api/comps/{id}")
+    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody CompRequest.UpdateDTO requestDTO) {
         User sessionComp = (User) session.getAttribute("sessionComp");
         User user = compService.updateById(sessionComp, requestDTO);
         session.setAttribute("sessionComp", user);
-        return "redirect:/comp/" + id + "/comp-home";
+        return ResponseEntity.ok(new ApiUtil<>(requestDTO));
     }
 
-    @GetMapping("/comp/{id}/update-form")
+    //update-form
+    @GetMapping("/api/comps/{id}")
     public String updateForm(@PathVariable int id, HttpServletRequest request) {
         User sessionComp = (User) session.getAttribute("sessionComp");
         User newSessionUser = compService.findById(sessionComp.getId());
