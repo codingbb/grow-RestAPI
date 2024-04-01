@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import shop.mtcoding.blog._core.util.ApiUtil;
 import shop.mtcoding.blog.model.resume.ResumeService;
 import shop.mtcoding.blog.model.user.User;
+import shop.mtcoding.blog.model.user.UserResponse;
 
 import java.util.List;
 
@@ -44,12 +45,12 @@ public class CompController {
 
     //update-form
     @GetMapping("/api/comps/{id}")
-    public String updateForm(@PathVariable int id, HttpServletRequest request) {
+    public ResponseEntity<?> updateForm(@PathVariable int id) {
         User sessionComp = (User) session.getAttribute("sessionComp");
-        User newSessionUser = compService.findById(sessionComp.getId());
-        request.setAttribute("user", newSessionUser);
+        CompResponse.CompUpdateDTO respDTO = compService.findById(sessionComp.getId());
+//        request.setAttribute("user", newSessionUser);
 
-        return "/comp/update-form";
+        return ResponseEntity.ok(new ApiUtil<>(respDTO));
     }
 
     @GetMapping("/comp/comp-index")

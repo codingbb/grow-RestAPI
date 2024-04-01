@@ -16,6 +16,29 @@ import java.util.stream.Collectors;
 public class CompResponse {
 
     @Data
+    public static class CompUpdateDTO {
+        private Integer id;
+        private String myName;
+        private String compName;
+        private String phone;
+        private String businessNumber;
+        private String homepage;
+        private LocalDate birth;
+        private String address;
+
+        public CompUpdateDTO(User user) {
+            this.id = user.getId();
+            this.myName = user.getMyName();
+            this.compName = user.getCompName();
+            this.phone = user.getPhone();
+            this.businessNumber = user.getBusinessNumber();
+            this.homepage = user.getHomepage();
+            this.birth = user.getBirth();
+            this.address = user.getAddress();
+        }
+    }
+
+    @Data
     public static class CompManageDTO {
         private Integer jobsCount;
         private Integer applicantCount;
