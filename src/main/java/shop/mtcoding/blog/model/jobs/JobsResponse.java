@@ -15,6 +15,59 @@ import java.util.stream.Collectors;
 public class JobsResponse {
 
     @Data
+    public static class JobsDetailDTO {
+        //jobs
+        private Integer id;
+        private String title;
+        private String area;
+        private String edu;
+        private String career;
+        private String content;
+//        private boolean isOwner;
+
+        //user
+        private Integer userId;
+        private String compName;
+        private String phone;
+        private String address;
+        private String homepage;
+
+        //skill
+        private List<SkillDTO2> skills = new ArrayList<>();
+
+        public JobsDetailDTO(Jobs jobs, User user) {
+            this.id = jobs.getId();
+            this.title = jobs.getTitle();
+            this.area = jobs.getArea();
+            this.edu = jobs.getEdu();
+            this.career = jobs.getCareer();
+            this.content = jobs.getContent();
+            this.userId = jobs.getUser().getId();
+            this.compName = jobs.getUser().getCompName();
+            this.phone = jobs.getUser().getPhone();
+            this.address = jobs.getUser().getAddress();
+            this.homepage = jobs.getUser().getHomepage();
+            this.skills = jobs.getSkillList().stream().map(skill ->
+                    new SkillDTO2(skill)).collect(Collectors.toList());
+
+//                    skills.stream().map(skill ->
+//                    new SkillDTO2(jobs, skill)).collect(Collectors.toList());
+        }
+
+        @Data
+        public class SkillDTO2 {
+            private Integer id;
+            private String name;
+
+            public SkillDTO2(Skill skill) {
+                this.id = skill.getId();
+                this.name = skill.getName();
+            }
+        }
+
+    }
+
+    @Data
     public static class DetailDTO {
         private Integer id;
         private String title;
